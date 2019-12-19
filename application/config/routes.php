@@ -53,5 +53,7 @@ $route['default_controller'] = 'kelola';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 $route['edit'] = 'kelola/edit';
+// $route['verifikasi'] = 'kelola/verifikasi';
 $route['lolos'] = 'lolos';
+$route['test'] = 'test';
 

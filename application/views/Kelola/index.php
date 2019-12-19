@@ -1,10 +1,11 @@
+    <!-- <?php var_dump($mahasiswa); ?> -->
     <div class="container" style="padding:0">
         <div class="row mt-5">
             <div class="d-inline col-lg-12">
                 <h2 class="mt-5">Pemilihan Calon Penerima Beasiswa PPA</h2>
-                <span>Halaman kelola Data Inovasi</span>
+                <span>Kelola Data Inovasi</span>
             </div>
-            
+
             <div class="col-lg-2 ">
                 <!-- <a href="/students/add" class=" btn btn-primary my-3 "> Tambah Data</a> -->
             </div>
@@ -15,40 +16,43 @@
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col" class="align-middle">No</th>
-                                    <th class="align-middle" >Nim</th>
-                                    <th class="align-middle" >Nama</th>
-                                    <th class="align-middle" >SMT</th>
-                                    <th class="align-middle" >Angkatan</th>
-                                    <th class="align-middle" >Kelas</th>
-                                    <th class="align-middle" >No Rekening</th>
-                                    <th class="align-middle" >Nama Dalam Rekening</th>
-                                    <th class="align-middle" >IPK</th>
-                                    <th class="align-middle" >Penghasilan Orang Tua</th>
-                                    <th class="align-middle" >Jumlah Tanggungan</th>
+                                    <th class="align-middle">Nim</th>
+                                    <th class="align-middle">Nama</th>
+                                    <th class="align-middle">SMT</th>
+                                    <th class="align-middle">Angkatan</th>
+                                    <th class="align-middle">Kelas</th>
+                                    <th class="align-middle">No Rekening</th>
+                                    <th class="align-middle">Nama Dalam Rekening</th>
+                                    <th class="align-middle">IPK</th>
+                                    <th class="align-middle">Penghasilan Orang Tua</th>
+                                    <th class="align-middle">Jumlah Tanggungan</th>
                                     <th colspan="2" class="sorting_asc_disabled sorting_desc_disabled align-middle">Aksi</th>
-                                    
+
                                 </tr>
                             </thead>
-                            <tr>
-                                <td scope="row">1</td>
-                                <td>4616010022</td>
-                                <td>TEST NAMA ORANG</td>
-                                <td>6</td>
-                                <td>2016</td>
-                                <td>TI REG</td>
-                                <td>157-00-0601728-0</td>
-                                <td>TEST NAMA ORANG</td>
-                                <td><a href="#" class="myModal" data-toggle="modal" data-target="#myModal-Ip"> 3.08</a></td>
-                                <td>5.000.000</td>
-                                <td>4</td>
-                                <td>
-                                    <a href="#" class="btn badge-success" >Verifikasi</a>
-                                </td>
-                                <td>
-                                    <a href="edit" class="btn badge-warning" >Kelola</a>
-                                </td>
-                            </tr>
-                            
+                            <?php $i = 1; ?>
+                            <?php foreach ($mahasiswa as $mhs) : ?>
+                                <tr>
+                                    <td scope="row"><?= $i ?></td>
+                                    <td><?= $mhs['nim'] ?></td>
+                                    <td><?= $mhs['nama'] ?></td>
+                                    <td>semester</td>
+                                    <td>angkatan</td>
+                                    <td><?= $mhs['prodi'] ?></td>
+                                    <td>No Rekening</td>
+                                    <td>Nama Rekening</td>
+                                    <td><a href="#" class="myModal" data-toggle="modal" data-target="#myModal-Ip-<?= $i ?>"><?= $mhs['ipk'] ?></a></td>
+                                    <td><?= $mhs['gaji_ortu'] ?></td>
+                                    <td><?= $mhs['jumlah_saudara'] ?></td>
+                                    <td>
+                                        <a href="#" class="btn badge-success">Verifikasi</a>
+                                    </td>
+                                    <td>
+                                        <a href="edit" class="btn badge-warning">Edit</a>
+                                    </td>
+                                    <?php $i++  ?>
+                                </tr>
+                            <?php endforeach; ?>
                         </table>
                     </div>
                 </div>
@@ -58,8 +62,10 @@
 
     </div>
 
+    <?php $i = 1; ?>
+    <?php foreach ($mahasiswa as $mhs) : ?>
     <!-- BEGIN modal IP -->
-    <div class="modal fade" id="myModal-Ip">
+    <div class="modal fade" id="myModal-Ip-<?= $i ?>">
         <div class="modal-dialog">
             <div class="modal-content">
 
@@ -74,7 +80,7 @@
                         <table class="table text-center">
                             <thead class="thead-light">
                                 <tr>
-                                    <th colspan="8  ">SEMSETER</th>
+                                    <th colspan="6">SEMSETER</th>
                                     <th rowspan="2" class="align-middle">IPK</th>
                                 </tr>
                                 <tr>
@@ -84,21 +90,17 @@
                                     <th>4</th>
                                     <th>5</th>
                                     <th>6</th>
-                                    <th>7</th>
-                                    <th>8</th>                                
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>4.0</td>
-                                    <td>4.0</td>
-                                    <td>4.0</td>
-                                    <td>4.0</td>
-                                    <td>3.0</td>
-                                    <td>3.4</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>3.08</td>
+                                    <td><?= $mhs['ip1'] ?></td>
+                                    <td><?= $mhs['ip2'] ?></td>
+                                    <td><?= $mhs['ip3'] ?></td>
+                                    <td><?= $mhs['ip4'] ?></td>
+                                    <td><?= $mhs['ip5'] ?></td>
+                                    <td><?= $mhs['ip6'] ?></td>                                    
+                                    <td><?= $mhs['ipk'] ?></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -112,6 +114,10 @@
         </div>
     </div>
     <!-- END Modal IP -->
+
+    <?php $i++  ?>
+    <?php endforeach; ?>
+
 
     <!-- BEGIN modal Kelola -->
     <div class="modal fade" id="myModal-Ip">
@@ -140,7 +146,7 @@
                                     <th>5</th>
                                     <th>6</th>
                                     <th>7</th>
-                                    <th>8</th>                                
+                                    <th>8</th>
                                 </tr>
                             </thead>
                             <tbody>
