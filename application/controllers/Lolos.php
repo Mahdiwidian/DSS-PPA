@@ -15,5 +15,12 @@
             $this->load->view('Lolos/index');
             $this->load->view('Layout/footer');
         }
+
+        public function delete()
+        {
+            $id = $_POST['id'];            
+            $this->Lolos_model->deleteData($id);
+            redirect('lolos');
+        }
     }
 ?>
