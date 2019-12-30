@@ -1,4 +1,4 @@
-    <!-- <?php var_dump($lolos); ?> -->
+    <!-- <?php var_dump($alternatif); ?> -->
     <div class="container" style="padding:0">
         <div class="row mt-5">
             <div class="d-inline col-lg-12">
@@ -11,7 +11,7 @@
             <!-- Default unchecked -->
             <div class="col-lg-12">
                 <form id="myform" method="post" action="<?= base_url('/lolos/delete/') ?>">
-                    <table id="mytable" class="table table-responsive table-hover" style="width:100%">
+                    <table id="mytable" class="table table-sm table-responsive table-hover" style="width:100%">
                         <thead class="thead-light">
                             <tr>
                                 <th class="align-middle" ><span>All</span><input type="checkbox" id="checkall"></th>
@@ -72,6 +72,16 @@
                         </tfoot>
                     </table>
                 </form>
+            </div>
+            <div class="card col-lg-12 mt-5 shadow">
+                <div class="card-body">
+                    <?php foreach ($alternatif as $key => $alt) {
+                        echo "<input type='checkbox'>";
+                        echo $alt['nim']."</br>";
+                        echo $alt['nama']."</br>";
+                        echo $alt['v']."</br>";
+                    } ?>
+                </div>
             </div>
         </div>
 

@@ -10,10 +10,10 @@
             <!-- Default unchecked -->
             <div class="col-lg-12 shadow-sm">
                 <form id="myform" method="post" action="<?= base_url('/kelola/delete/') ?>">
-                    <table id="mytable" class="table table-responsive table-hover" style="width:100%">
+                    <table id="mytable" class="table table-sm table-responsive table-hover" style="width:100%">
                         <thead class="thead-light">
                             <tr>
-                                <th class="align-middle"><input type="checkbox" id="checkall"></th>
+                                <th class="align-middle">All<input type="checkbox" id="checkall"></th>
                                 <th scope="col" class="align-middle">No</th>
                                 <th class="align-middle">Nim</th>
                                 <th class="align-middle">Nama</th>
