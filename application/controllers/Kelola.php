@@ -62,8 +62,8 @@
             $mahasiswa = $this->Mahasiswa_model->getMahasiswaById($nim);
 
             // update status
-            $data = ["status" => 1];
-            $this->Mahasiswa_model->updateMahasiswa($nim, $data);
+            $status = ["status" => 1];
+            $this->Mahasiswa_model->updateMahasiswa($nim, $status);
             // $data['mahasiswa'] = $this->Mahasiswa_model->verifData($nim);
     
             // BEGIN NILAI KONVErSI
@@ -108,7 +108,7 @@
                 "c2" => $c2,
                 "c3" => $c3,
                 "c4" => $c4
-            ];            
+            ]; 
 
             $this->Lolos_model->insertData($data);
             redirect('kelola');

@@ -16,6 +16,10 @@ class Lolos_model extends CI_Model{
         $this->db->where_in('id', $id);
         $this->db->delete('data_lolos');
     }
+    public function deleteAllData()
+    {
+        $this->db->empty_table('data_lolos'); 
+    }
 
     public function insertData($data)
     {

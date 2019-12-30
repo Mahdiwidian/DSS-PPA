@@ -18,6 +18,11 @@ class Mahasiswa_model extends CI_Model{
         $this->db->update('data_mahasiswa', $data);
     }
 
+    public function updateAllMahasiswa($data)
+    {
+        $this->db->update('data_mahasiswa', $data);
+    }
+
     public function deleteData($nim)
     {
         $this->db->where_in('nim', $nim);

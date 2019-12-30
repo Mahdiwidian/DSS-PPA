@@ -7,7 +7,7 @@
 <script src="<?= base_url()?>/assets/js/jquery.dataTables.min.js"></script>
 <script src="<?= base_url()?>/assets/js/dataTables.bootstrap4.min.js"></script>
 <script src="<?= base_url()?>/assets/js/popper.min.js"></script>
-<script src="<?= base_url()?>/assets/js/bootstrap.min.js"></script>
+<script src="<?= base_url()?>/assets/js/bootstrap.js"></script>
 <script>
     $(document).ready(function() {
         $('.myModal').click(function(event) {
