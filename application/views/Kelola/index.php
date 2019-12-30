@@ -2,7 +2,7 @@
         <div class="row mt-5">
             <div class="d-inline col-lg-12">
                 <h2 class="mt-5">Pemilihan Calon Penerima Beasiswa PPA</h2>
-                <span>Kelola Data Inovasi</span>
+                <span>Kelola Data</span>
             </div>
             <div class="col-lg-3 mb-3 ">
                 <button id="del" class="btn btn-danger mt-3">Delete Selected</button>
@@ -10,6 +10,7 @@
             <!-- Default unchecked -->
             <div class="col-lg-12 shadow-sm">
                 <form id="myform" method="post" action="<?= base_url('/kelola/delete/') ?>">
+                    <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
                     <table id="mytable" class="table table-sm table-responsive table-hover" style="width:100%">
                         <thead class="thead-light">
                             <tr>
@@ -53,7 +54,7 @@
                                 <?php $i++; ?>
                             <?php endforeach ?>
                         </tbody>
-                        <tfoot class="thead-dark"> 
+                        <tfoot class="thead-dark">
                             <tr>
                                 <th class="text-center"></th>
                                 <th scope="col" class="align-middle">No</th>
@@ -183,7 +184,7 @@
                 </div>
                 <!-- END Modal IP -->
 
-            <?php $i++  ?>
+                <?php $i++  ?>
             <?php endforeach; ?>
             <script>
                 var nav = document.getElementsByClassName("nav-item");

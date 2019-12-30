@@ -11,88 +11,98 @@ class Lolos extends CI_Controller
 
     public function index()
     {
-        $lolos = $this->Lolos_model->getAllLolos();
-        $data['lolos'] =  $lolos;
-
-        if ($lolos != null) {
-            // mengurutkan array max dan min
-            foreach ($lolos as $key => $krit) {
-                $c1[$key] = $krit['c1'];
-                $c2[$key] = $krit['c2'];
-                $c3[$key] = $krit['c3'];
-                $c4[$key] = $krit['c4'];
-            }
-
-            // mencari max dan min
-            $C1min = MIN($c1);
-            $C2max = MAX($c2);
-            $C3max = MAX($c3);
-            $C4max = MAX($c4);
-
-            // normalisasi kategori
-
-            foreach ($lolos as $key => $d_lolos) {
-                $data_normal[$key] = [
-                    "c1" => ($C1min/$d_lolos['c1']),
-                    "c2" => ($d_lolos['c2']/$C2max),
-                    "c3" => ($d_lolos['c3']/$C3max),
-                    "c4" => ($d_lolos['c4']/$C4max)
-                ];
-            }
-
-            
-            //c * bobot            
-            foreach ($lolos as $key => $d_lolos) {
-                $data_lolos[] = [
-                    "nim" => $d_lolos['id_data_mhsw'],
-                    "nama" => $d_lolos['nama'],
-                    "v" => ($data_normal[$key]['c1']*0.3)+($data_normal[$key]['c2']*0.27)+($data_normal[$key]['c3']*0.23)+($data_normal[$key]['c4']*0.2),
-                    "c1" => ($data_normal[$key]['c1']),
-                    "c2" => ($data_normal[$key]['c2']),
-                    "c3" => ($data_normal[$key]['c3']),
-                    "c4" => ($data_normal[$key]['c4']),
-                    "C1min" => $C1min,
-                    "C2max" => $C2max,
-                    "C3max" => $C3max,
-                    "C4max" => $C4max
-                ];
-            }
-
-            // echo '<pre>';
-            // var_dump($data_lolos);
-            // echo '<pre>';
-            // die();
-
-            function array_sort_by_column(&$arr, $col, $dir = SORT_DESC) {
-                $sort_col = array();
-                foreach ($arr as $key=> $row) {
-                    $sort_col[$key] = $row[$col];
+        if($_SESSION['masuk'] == TRUE){
+            if ($_SESSION['akses'] == 1) {
+                $lolos = $this->Lolos_model->getAllLolos();
+                $data['lolos'] =  $lolos;
+        
+                if ($lolos != null) {
+                    // mengurutkan array max dan min
+                    foreach ($lolos as $key => $krit) {
+                        $c1[$key] = $krit['c1'];
+                        $c2[$key] = $krit['c2'];
+                        $c3[$key] = $krit['c3'];
+                        $c4[$key] = $krit['c4'];
+                    }
+        
+                    // mencari max dan min
+                    $C1min = MIN($c1);
+                    $C2max = MAX($c2);
+                    $C3max = MAX($c3);
+                    $C4max = MAX($c4);
+        
+                    // normalisasi kategori
+        
+                    foreach ($lolos as $key => $d_lolos) {
+                        $data_normal[$key] = [
+                            "c1" => ($C1min/$d_lolos['c1']),
+                            "c2" => ($d_lolos['c2']/$C2max),
+                            "c3" => ($d_lolos['c3']/$C3max),
+                            "c4" => ($d_lolos['c4']/$C4max)
+                        ];
+                    }
+        
+                    
+                    //c * bobot            
+                    foreach ($lolos as $key => $d_lolos) {
+                        $data_lolos[] = [
+                            "nim" => $d_lolos['id_data_mhsw'],
+                            "nama" => $d_lolos['nama'],
+                            "v" => ($data_normal[$key]['c1']*0.3)+($data_normal[$key]['c2']*0.27)+($data_normal[$key]['c3']*0.23)+($data_normal[$key]['c4']*0.2),
+                            "c1" => ($data_normal[$key]['c1']),
+                            "c2" => ($data_normal[$key]['c2']),
+                            "c3" => ($data_normal[$key]['c3']),
+                            "c4" => ($data_normal[$key]['c4']),
+                            "C1min" => $C1min,
+                            "C2max" => $C2max,
+                            "C3max" => $C3max,
+                            "C4max" => $C4max
+                        ];
+                    }
+        
+                    // echo '<pre>';
+                    // var_dump($data_lolos);
+                    // echo '<pre>';
+                    // die();
+        
+                    function array_sort_by_column(&$arr, $col, $dir = SORT_DESC) {
+                        $sort_col = array();
+                        foreach ($arr as $key=> $row) {
+                            $sort_col[$key] = $row[$col];
+                        }
+        
+                        array_multisort($sort_col, $dir, $arr);
+                    }
+        
+        
+                    array_sort_by_column($data_lolos, 'v');
+                    // array_multisort($v, SORT_ASC);
+        
+        
+                    $data['alternatif'] = $data_lolos;
+        
+                    if(@$_POST['submit'] == "Terima"){
+                        $this->accept($data['alternatif']);
+                    }
+        
+        
+                    
+                }else{
+                    $data['alternatif'] = $lolos;
                 }
-
-                array_multisort($sort_col, $dir, $arr);
+        
+                $data['page_title'] = 'Data Terverifikasi';
+                $this->load->view('Layout/header', $data);
+                $this->load->view('Lolos/index');
+                $this->load->view('Layout/footer');
+            }else {
+                redirect(base_url()); 
             }
-
-
-            array_sort_by_column($data_lolos, 'v');
-            // array_multisort($v, SORT_ASC);
-
-
-            $data['alternatif'] = $data_lolos;
-
-            if(@$_POST['submit'] == "Terima"){
-                $this->accept($data['alternatif']);
-            }
-
-
-            
-        }else{
-            $data['alternatif'] = $lolos;
+        }else {
+            $url=base_url();
+            echo $this->session->set_flashdata('msg','Login Terlebih Dahulu');
+            redirect($url);
         }
-
-        $data['page_title'] = 'Data Terverifikasi';
-        $this->load->view('Layout/header', $data);
-        $this->load->view('Lolos/index');
-        $this->load->view('Layout/footer');
     }
 
     public function accept($data)

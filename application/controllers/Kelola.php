@@ -10,11 +10,21 @@
         
         public function index()
         {
-            $data['mahasiswa'] =  $this->Mahasiswa_model->getAllMahasiswa();
-            $data['page_title'] = 'Kelola Data Mahasiswa';
-            $this->load->view('Layout/header', $data);
-            $this->load->view('Kelola/index');
-            $this->load->view('Layout/footer');
+            if($_SESSION['masuk'] == TRUE){
+                if ($_SESSION['akses'] == 1) {
+                    $data['mahasiswa'] =  $this->Mahasiswa_model->getAllMahasiswa();
+                    $data['page_title'] = 'Kelola Data Mahasiswa';
+                    $this->load->view('Layout/header', $data);
+                    $this->load->view('Kelola/index');
+                    $this->load->view('Layout/footer');
+                }else {
+                    redirect(base_url()); 
+                }
+            }else{
+                $url=base_url();
+                echo $this->session->set_flashdata('msg','Login Terlebih Dahulu');
+                redirect($url);
+            }
         }
 
         public function edit($nim)

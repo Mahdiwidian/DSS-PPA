@@ -7,9 +7,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="<?= base_url()?>/assets/css/style.css">
-    <link rel="stylesheet" href="<?= base_url()?>/assets/css/bootstrap.css">
-    <link rel="stylesheet" href="<?= base_url()?>/assets/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="<?= base_url() ?>/assets/css/style.css">
+    <link rel="stylesheet" href="<?= base_url() ?>/assets/css/bootstrap.css">
+    <link rel="stylesheet" href="<?= base_url() ?>/assets/css/dataTables.bootstrap4.min.css">
     <title><?php echo $page_title; ?></title>
 </head>
 
@@ -22,14 +22,31 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="<?= base_url('kelola'); ?>">Kelola Data <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('lolos'); ?>">Data Terverifikasi <span class="sr-only">(current)</span></a>
-                </li>
-            </ul>
+            <?php
+            if ($_SESSION['akses'] == 1) {
+                ?>
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="<?= base_url('kelola'); ?>">Kelola Data <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= base_url('lolos'); ?>">Data Terverifikasi <span class="sr-only">(current)</span></a>
+                    </li>
+                </ul>
+            <?php
+            } else {
+                ?>
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="<?= base_url('Mhs'); ?>">Daftar Beasiswa PPA <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= base_url(''); ?>">Pengumuman<span class="sr-only">(current)</span></a>
+                    </li>
+                </ul>
+            <?php
+            }
+            ?>
             <div class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span>Hallo, <?= $_SESSION['ses_nama'] ?></span>

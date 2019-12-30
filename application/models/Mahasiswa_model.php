@@ -11,6 +11,11 @@ class Mahasiswa_model extends CI_Model{
         return $this->db->get_where('data_mahasiswa', ['nim' => $nim])->row_array();
         // return $this->db->where('nim', $nim);
     }
+    
+    public function inserMahasiswa($data)
+    {
+        $this->db->insert('data_mahasiswa', $data);
+    }
 
     public function updateMahasiswa($nim, $data)
     {

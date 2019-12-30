@@ -10,6 +10,7 @@
             <!-- Default unchecked -->
             <div class="col-lg-12">
                 <form id="myform" method="post" action="<?= base_url('/lolos/delete/') ?>">
+                    <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
                     <table id="mytable" class="table table-sm table-responsive table-hover" style="width:100%">
                         <thead class="thead-light">
                             <tr>
@@ -74,6 +75,7 @@
             </div>
             <div class="col-lg-12">
                 <form action="<?= base_url('/lolos/index') ?>" method="post">
+                    <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
                     <div class="card mt-5">
                         <div class="card-header">
                             <h2> Data Alternatif</h2>
