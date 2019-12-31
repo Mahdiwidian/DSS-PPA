@@ -33,37 +33,35 @@
                 [1, 'asc']
             ]
         })
+        
+
+        $('.checkitem').change(function() {
+            if ($(this).is(':checked')) {
+                $('#del').prop('disabled', false);
+            }else{
+                $('#del').prop('disabled', true);
+            }
+            
+            // $('#del').attr('value', 'keren')
+        })
+
         $('#checkall').change(function() {
             $('.checkitem').prop("checked", $(this).prop("checked"))
+            if ($('.checkitem').is(':checked')) {
+                $('#del').prop('disabled', false);
+            }else{
+                $('#del').prop('disabled', true);
+            }
         })
-        // $('#view').click(function(e){
-        //     var id = $('.checkitem:checked').map(function(){
-        //         return $(this).val()
-        //     }).get().join(',')
-        //     // alert(id)
-        //     $("#view-rows").text(id)
-        //     e.preventDefault()
-        // })
-        // $("#myform").on('submit', function(e) {
-        //     var form = this;
-        //     var rowsel = $('.checkitem:checked').map(function() {
-        //         return $(this).val()
-        //     }).get().join(',')
-
-        //     // $.each(rowsel, function(index, rowId){
-        //     //     $(form).append(
-        //     //         $('<input>').attr('type', 'hidden').attr('name', 'id[]').val(rowId)
-        //     //     )
-        //     // })
-
-        //     $("#view-rows").text(rowsel)
-        //     $("#view-form").text($(form).serialize())
-        //     $('input[name="id\[\]"]', form).remove()
-        //     e.preventDefault()
+        // $('#terima').click(function() {
+        //     $('#myform').attr('action', '<?= base_url('/lolos/index/') ?>')
+        //     $("#myform").submit(); // Submit form
         // })
         $("#del").click(function(e) {
             var confirm = window.confirm("Apakah Anda yakin ingin menghapus data-data ini?");
             if (confirm) // Jika user mengklik tombol "Ok"
+                $('#myform').attr('action', '<?= base_url('/lolos/delete/') ?>')
+                $('#terima').attr('name', '')
                 $("#myform").submit(); // Submit form
         });
     })

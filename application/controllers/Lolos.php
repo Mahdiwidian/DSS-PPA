@@ -11,11 +11,12 @@ class Lolos extends CI_Controller
 
     public function index()
     {
-        if($_SESSION['masuk'] == TRUE){
+        if ($_SESSION['masuk'] == TRUE) {
             if ($_SESSION['akses'] == 1) {
                 $lolos = $this->Lolos_model->getAllLolos();
                 $data['lolos'] =  $lolos;
-        
+
+
                 if ($lolos != null) {
                     // mengurutkan array max dan min
                     foreach ($lolos as $key => $krit) {
@@ -24,83 +25,84 @@ class Lolos extends CI_Controller
                         $c3[$key] = $krit['c3'];
                         $c4[$key] = $krit['c4'];
                     }
-        
+
                     // mencari max dan min
                     $C1min = MIN($c1);
                     $C2max = MAX($c2);
                     $C3max = MAX($c3);
                     $C4max = MAX($c4);
-        
+
                     // normalisasi kategori
-        
+
                     foreach ($lolos as $key => $d_lolos) {
                         $data_normal[$key] = [
-                            "c1" => ($C1min/$d_lolos['c1']),
-                            "c2" => ($d_lolos['c2']/$C2max),
-                            "c3" => ($d_lolos['c3']/$C3max),
-                            "c4" => ($d_lolos['c4']/$C4max)
+                            "c1" => ($C1min / $d_lolos['c1']),
+                            "c2" => ($d_lolos['c2'] / $C2max),
+                            "c3" => ($d_lolos['c3'] / $C3max),
+                            "c4" => ($d_lolos['c4'] / $C4max)
                         ];
                     }
-        
-                    
+
+
                     //c * bobot            
                     foreach ($lolos as $key => $d_lolos) {
                         $data_lolos[] = [
-                            "nim" => $d_lolos['id_data_mhsw'],
-                            "nama" => $d_lolos['nama'],
-                            "v" => ($data_normal[$key]['c1']*0.3)+($data_normal[$key]['c2']*0.27)+($data_normal[$key]['c3']*0.23)+($data_normal[$key]['c4']*0.2),
-                            "c1" => ($data_normal[$key]['c1']),
-                            "c2" => ($data_normal[$key]['c2']),
-                            "c3" => ($data_normal[$key]['c3']),
-                            "c4" => ($data_normal[$key]['c4']),
-                            "C1min" => $C1min,
-                            "C2max" => $C2max,
-                            "C3max" => $C3max,
-                            "C4max" => $C4max
+                            "lolos" => $data['lolos'][$key],
+                            "alternatif" => [
+                                "c1" => ($data_normal[$key]['c1']),
+                                "c2" => ($data_normal[$key]['c2']),
+                                "c3" => ($data_normal[$key]['c3']),
+                                "c4" => ($data_normal[$key]['c4']),
+                                "C1min" => $C1min,
+                                "C2max" => $C2max,
+                                "C3max" => $C3max,
+                                "C4max" => $C4max,
+                                // "v" => ($data_normal[$key]['c1'] * 0.3) + ($data_normal[$key]['c2'] * 0.27) + ($data_normal[$key]['c3'] * 0.23) + ($data_normal[$key]['c4'] * 0.2),
+                            ],
+                            "score" => ($data_normal[$key]['c1'] * 0.3) + ($data_normal[$key]['c2'] * 0.27) + ($data_normal[$key]['c3'] * 0.23) + ($data_normal[$key]['c4'] * 0.2),
                         ];
                     }
-        
-                    // echo '<pre>';
-                    // var_dump($data_lolos);
-                    // echo '<pre>';
-                    // die();
-        
-                    function array_sort_by_column(&$arr, $col, $dir = SORT_DESC) {
+
+
+                    function array_sort_by_column(&$arr, $col, $dir = SORT_DESC)
+                    {
                         $sort_col = array();
-                        foreach ($arr as $key=> $row) {
+                        foreach ($arr as $key => $row) {
                             $sort_col[$key] = $row[$col];
                         }
-        
+
                         array_multisort($sort_col, $dir, $arr);
                     }
-        
-        
-                    array_sort_by_column($data_lolos, 'v');
+
+
+                    array_sort_by_column($data_lolos, 'score');
                     // array_multisort($v, SORT_ASC);
-        
-        
-                    $data['alternatif'] = $data_lolos;
-        
-                    if(@$_POST['submit'] == "Terima"){
-                        $this->accept($data['alternatif']);
+
+
+                    $data_mhs['mahasiswa'] = $data_lolos;
+
+                    // echo '<pre>';
+                    // var_dump($data_mhs);
+                    // echo '<pre>';
+                    // die();
+
+                    if (@$_POST['submit'] == "Terima") {
+                        $this->accept($data_lolos);
                     }
-        
-        
-                    
-                }else{
-                    $data['alternatif'] = $lolos;
+                } else {
+                    $data_mhs['mahasiswa'] = $lolos;
                 }
-        
-                $data['page_title'] = 'Data Terverifikasi';
-                $this->load->view('Layout/header', $data);
+
+                $data_mhs['page_title'] = 'Data Terverifikasi';
+                $this->load->view('Layout/header', $data_mhs);
                 $this->load->view('Lolos/index');
                 $this->load->view('Layout/footer');
-            }else {
-                redirect(base_url()); 
+            } else {
+                redirect(base_url());
             }
-        }else {
-            $url=base_url();
-            echo $this->session->set_flashdata('msg','Login Terlebih Dahulu');
+        } else {
+            $url = base_url();
+            echo $this->session->set_flashdata('msg', 'Login Terlebih Dahulu');
             redirect($url);
         }
     }
@@ -108,21 +110,23 @@ class Lolos extends CI_Controller
     public function accept($data)
     {
         $id = $_POST['id'];
-        echo "<pre>";
-        print_r($id);
+        // echo "<pre>";
+        // // print_r($id);
         // print_r ($data);
-        echo "</pre>";
+        // echo "</pre>";
+        // die();
+        
 
         for ($j = 0; $j < count($data); $j++) {
             for ($i = 0; $i < count($data); $i++) {
-                if (@$id[$j] == $data[$i]['nim']) {
+                if (@$id[$j] == $data[$i]['lolos']['id']) {
                     $data_alt[$j] = [
-                        "id_data_mhsw" => $data[$i]['nim'],
-                        "f_c1" => $data[$i]['c1'],
-                        "f_c2" => $data[$i]['c2'],
-                        "f_c3" => $data[$i]['c3'],
-                        "f_c4" => $data[$i]['c4'],
-                        "score" => $data[$i]['v']
+                        "id_data_mhsw" => $data[$i]['lolos']['nim'],
+                        "f_c1" => $data[$i]['alternatif']['c1'],
+                        "f_c2" => $data[$i]['alternatif']['c2'],
+                        "f_c3" => $data[$i]['alternatif']['c3'],
+                        "f_c4" => $data[$i]['alternatif']['c4'],
+                        "score" => $data[$i]['score']
                     ];
                 }
             }
@@ -145,4 +149,3 @@ class Lolos extends CI_Controller
         redirect('lolos');
     }
 }
-?>

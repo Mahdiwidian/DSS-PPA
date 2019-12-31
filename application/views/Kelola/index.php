@@ -5,7 +5,7 @@
                 <span>Kelola Data</span>
             </div>
             <div class="col-lg-3 mb-3 ">
-                <button id="del" class="btn btn-danger mt-3">Delete Selected</button>
+                <button id="del" class="btn btn-danger mt-3" disabled>Delete Selected</button>
             </div>
             <!-- Default unchecked -->
             <div class="col-lg-12 shadow-sm">
@@ -43,7 +43,7 @@
                                     <td><?= $mhs['rekening'] ?></td>
                                     <td>Nama Rekening</td>
                                     <td><a href="#" class="myModal" data-toggle="modal" data-target="#myModal-Ip-<?= $i ?>"><?= $mhs['ipk'] ?></a></td>
-                                    <td><?= $mhs['gaji_ortu'] ?></td>
+                                    <td>Rp <?= number_format($mhs['gaji_ortu'] ,0,',','.'); ?> </td>
                                     <td><?= $mhs['jumlah_saudara'] ?></td>
                                     <td>
                                         <!-- <a href="<?= base_url() ?>kelola/edit/<?= $mhs['nim'] ?>" class="btn badge-warning">Edit</a> -->
