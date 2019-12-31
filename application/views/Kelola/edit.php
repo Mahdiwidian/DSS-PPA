@@ -56,6 +56,7 @@
                     <input type="text" class="form-control" id="Semester" placeholder="Masukan Semester" name="semester" value="<?= $mahasiswa['semester'] ?> "require>
                 </div>
                 <button type="submit" class="btn btn-primary">Simpan Data</button>
+                <a href="<?= base_url('kelola') ?>"><button class="btn btn-danger">Kembali</button></a> 
                 <br>
                 <br>
 

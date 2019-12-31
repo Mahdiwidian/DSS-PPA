@@ -133,9 +133,9 @@ class Lolos extends CI_Controller
             $this->Pengumuman_model->insertData($data_alt[$j]);
         }
 
-        echo "<pre>";
-        print_r($data_alt);
-        echo "</pre>";
+        // echo "<pre>";
+        // print_r($data_alt);
+        // echo "</pre>";
 
         $status = ["status" => 0];
         $this->Mahasiswa_model->updateAllMahasiswa($status);
@@ -145,6 +145,16 @@ class Lolos extends CI_Controller
     public function delete()
     {
         $id = $_POST['id'];
+        $data = $this->Lolos_model->getLolos($id);
+        $nim = $data['nim'];
+
+        // echo "<pre>";
+        // print_r($nim);
+        // echo "</pre>";
+        // die();
+
+        $status = ["status" => 0];
+        $this->Mahasiswa_model->updateMahasiswa($nim, $status);
         $this->Lolos_model->deleteData($id);
         redirect('lolos');
     }

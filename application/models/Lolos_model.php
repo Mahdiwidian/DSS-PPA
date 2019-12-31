@@ -11,6 +11,18 @@ class Lolos_model extends CI_Model{
 
         return $data;
     }
+
+    public function getLolos($id)
+    {
+        
+        $this->db->select('*');
+        $this->db->from('data_lolos');
+        $this->db->join('data_mahasiswa', 'data_mahasiswa.nim = data_lolos.id_data_mhsw', 'left');
+        $this->db->where_in('data_lolos.id', $id);
+        $data = $this->db->get()->result_array();
+
+        return $data;
+    }
     public function deleteData($id)
     {
         $this->db->where_in('id', $id);
