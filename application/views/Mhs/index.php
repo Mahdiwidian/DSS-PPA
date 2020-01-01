@@ -256,7 +256,7 @@
 
 							<div class="form-group">
 								<label for="ipk">IPK</label>
-								<input type="text" class="form-control" id="ipk" name="ipk" placeholder="Masukan Pekerjaan Ayah">
+								<input type="text" class="form-control" id="ipk" name="ipk" placeholder="Masukan IPK">
 							</div>
 
 							<div class="form-group">
