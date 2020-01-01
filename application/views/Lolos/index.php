@@ -7,6 +7,19 @@
             <div class="col-lg-3 mb-3 ">
                 <button id="del" class="btn btn-danger mt-3" disabled>Delete Selected</button>
             </div>
+
+            <?php
+            if ($this->session->flashdata('msg')) {
+                ?>
+                <div class="col-lg-12 mb-3 ">
+                    <div class="alert alert-success">
+                        <?php echo $this->session->flashdata('msg'); ?>
+                    </div>
+                </div>
+            <?php
+            }
+            ?>
+
             <!-- Default unchecked -->
             <div class="col-lg-12">
                 <form id="myform" method="post">
@@ -75,7 +88,7 @@
                             </tr>
                         </tfoot>
                     </table>
-                    <input id="terima" type="submit" class="btn btn-success mt-4 col-lg-12" name="submit" value="Terima">
+                    <input id="terima" type="submit" class="btn btn-success mt-4 col-lg-12" name="submit" value="Terima" disabled>
                 </form>
             </div>
 
@@ -83,148 +96,16 @@
 
     </div>
 
-    <!-- <?php $i = 1; ?>
-    <?php foreach ($mahasiswa as $mhs_lolos) : ?> -->
-    <!-- BEGIN modal IP -->
-    <div class="modal fade" id="myModal-Ip-<?= $i ?>">
-        <div class="modal-dialog">
-            <div class="modal-content">
-
-                <div class="modal-header">
-                    <h5 class="modal-title">Daftar IP</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="card">
-                        <table class="table text-center">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th colspan="6">SEMSETER</th>
-                                    <th rowspan="2" class="align-middle">IPK</th>
-                                </tr>
-                                <tr>
-                                    <th>1</th>
-                                    <th>2</th>
-                                    <th>3</th>
-                                    <th>4</th>
-                                    <th>5</th>
-                                    <th>6</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><?= $mhs_lolos['lolos']['ip1'] ?></td>
-                                    <td><?= $mhs_lolos['lolos']['ip2'] ?></td>
-                                    <td><?= $mhs_lolos['lolos']['ip3'] ?></td>
-                                    <td><?= $mhs_lolos['lolos']['ip4'] ?></td>
-                                    <td><?= $mhs_lolos['lolos']['ip5'] ?></td>
-                                    <td><?= $mhs_lolos['lolos']['ip6'] ?></td>
-                                    <td><?= $mhs_lolos['lolos']['ipk'] ?></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <a class="btn btn-secondary" data-dismiss="modal">Close</a>
-                </div>
-
-            </div>
-        </div>
-    </div>
-    <!-- END Modal IP -->
-
-    <!-- BEGIN modal konversi -->
-    <div class="modal fade" id="myModal-kv-<?= $i ?>">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-
-                <div class="modal-header">
-                    <h5 class="modal-title">Detail</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="card">
-                        <table class="table">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th colspan="5">(<?= $mhs_lolos['lolos']['nim'] ?>) <?= $mhs_lolos['lolos']['nama'] ?></th>
-                                </tr>
-                                <tr class="thead-light text-center">
-                                    <th class="align-middle">Keterangan</th>
-                                    <th>Gaji Orang Tua <br> C1</th>
-                                    <th>Jumlah Tanggungan <br> C2</th>
-                                    <th>IPK <br> C3</th>
-                                    <th>Prodi <br> C4</th>
-                                </tr>
-                            </thead>
-                            <tbody class="text-center">
-                                <tr>
-                                    <td>Data Konversi</td>
-                                    <td><?= $mhs_lolos['lolos']['c1'] ?></td>
-                                    <td><?= $mhs_lolos['lolos']['c2'] ?></td>
-                                    <td><?= $mhs_lolos['lolos']['c3'] ?></td>
-                                    <td><?= $mhs_lolos['lolos']['c4'] ?></td>
-                                </tr>
-                                <tr>
-                                    <td>Data Konversi Normalisasi</td>
-                                    <td><?= $mhs_lolos['alternatif']['c1'] ?></td>
-                                    <td><?= $mhs_lolos['alternatif']['c2'] ?></td>
-                                    <td><?= $mhs_lolos['alternatif']['c3'] ?></td>
-                                    <td><?= $mhs_lolos['alternatif']['c4'] ?></td>
-                                </tr>
-                                <tr>
-                                    <td>Kriteria x Bobot</td>
-                                    <td><?= $mhs_lolos['alternatif']['c1'] * 0.3 ?></td>
-                                    <td><?= $mhs_lolos['alternatif']['c2'] * 0.27 ?></td>
-                                    <td><?= $mhs_lolos['alternatif']['c3'] * 0.23 ?></td>
-                                    <td><?= $mhs_lolos['alternatif']['c4'] * 0.2 ?></td>
-                                </tr>
-                                <tr>
-                                    <td><b>Bobot</b> </td>
-                                    <td>0.3</td>
-                                    <td>0.27</td>
-                                    <td>0.23</td>
-                                    <td>0.2</td>
-                                </tr>
-                                <tr>
-                                    <td><b> Max/Min</b> </td>
-                                    <td>(min)<br><?= $mhs_lolos['alternatif']['C1min'] ?></td>
-                                    <td>(max)<br><?= $mhs_lolos['alternatif']['C2max'] ?></td>
-                                    <td>(max)<br><?= $mhs_lolos['alternatif']['C3max'] ?></td>
-                                    <td>(max)<br><?= $mhs_lolos['alternatif']['C4max'] ?></td>
-                                </tr>
-                                <tr>
-                                    <td><b>Score</b></td>
-                                    <td colspan="4"><?= $mhs_lolos['score'] ?></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <a class="btn btn-secondary" data-dismiss="modal">Close</a>
-                </div>
-
-            </div>
-        </div>
-    </div>
-    <!-- END Modal konversi -->
-    <?php $i++  ?>
-    <?php endforeach; ?>
-
-    <!-- BEGIN modal normalisasi -->
-    <?php foreach ($mahasiswa as $key => $alt) : ?>
-        <div class="modal fade" id="myModal-sc-<?= $key ?>">
-            <div class="modal-dialog modal-lg">
+    <!-- BEGIN modal IP dan Kv -->
+    <!-- IP -->
+    <?php $i = 1; ?>
+    <?php foreach ($mahasiswa as $mhs_lolos) : ?>
+        <div class="modal fade" id="myModal-Ip-<?= $i ?>">
+            <div class="modal-dialog">
                 <div class="modal-content">
 
                     <div class="modal-header">
-                        <h5 class="modal-title">Nilai Score Perhitungan</h5>
+                        <h5 class="modal-title">Daftar IP</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -232,33 +113,29 @@
                     <div class="modal-body">
                         <div class="card">
                             <table class="table text-center">
-                                <thead class="thead-light align-middle">
+                                <thead class="thead-light">
                                     <tr>
-                                        <th>nim</th>
-                                        <th>nama</th>
-                                        <th>C1</th>
-                                        <th>C2</th>
-                                        <th>C3</th>
-                                        <th>C4</th>
-                                        <th>Score</th>
+                                        <th colspan="6">SEMSETER</th>
+                                        <th rowspan="2" class="align-middle">IPK</th>
+                                    </tr>
+                                    <tr>
+                                        <th>1</th>
+                                        <th>2</th>
+                                        <th>3</th>
+                                        <th>4</th>
+                                        <th>5</th>
+                                        <th>6</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td><?= $alt['lolos']['nim'] ?></td>
-                                        <td><?= $alt['lolos']['nama'] ?></td>
-                                        <td><?= $alt['alternatif']['c1'] ?>*0.3</td>
-                                        <td><?= $alt['alternatif']['c2'] ?>*0.27</td>
-                                        <td><?= $alt['alternatif']['c3'] ?>*0.23</td>
-                                        <td><?= $alt['alternatif']['c4'] ?>*0.2</td>
-                                        <td class="align-middle" rowspan="2"><?= $alt['score'] ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2">Max/Min</td>
-                                        <td>(min)<br><?= $alt['alternatif']['C1min'] ?></td>
-                                        <td>(max)<br><?= $alt['alternatif']['C2max'] ?></td>
-                                        <td>(max)<br><?= $alt['alternatif']['C3max'] ?></td>
-                                        <td>(max)<br><?= $alt['alternatif']['C4max'] ?></td>
+                                        <td><?= $mhs_lolos['lolos']['ip1'] ?></td>
+                                        <td><?= $mhs_lolos['lolos']['ip2'] ?></td>
+                                        <td><?= $mhs_lolos['lolos']['ip3'] ?></td>
+                                        <td><?= $mhs_lolos['lolos']['ip4'] ?></td>
+                                        <td><?= $mhs_lolos['lolos']['ip5'] ?></td>
+                                        <td><?= $mhs_lolos['lolos']['ip6'] ?></td>
+                                        <td><?= $mhs_lolos['lolos']['ipk'] ?></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -271,9 +148,86 @@
                 </div>
             </div>
         </div>
-    <?php endforeach; ?>
-    <!-- END Modal normalisasi -->
 
+        <div class="modal fade" id="myModal-kv-<?= $i ?>">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title">Detail</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card">
+                            <table class="table">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th colspan="5">(<?= $mhs_lolos['lolos']['nim'] ?>) <?= $mhs_lolos['lolos']['nama'] ?></th>
+                                    </tr>
+                                    <tr class="thead-light text-center">
+                                        <th class="align-middle">Keterangan</th>
+                                        <th>Gaji Orang Tua <br> C1</th>
+                                        <th>Jumlah Tanggungan <br> C2</th>
+                                        <th>IPK <br> C3</th>
+                                        <th>Prodi <br> C4</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-center">
+                                    <tr>
+                                        <td class="align-middle">Data Konversi</td>
+                                        <td><?= $mhs_lolos['lolos']['c1'] ?></td>
+                                        <td><?= $mhs_lolos['lolos']['c2'] ?></td>
+                                        <td><?= $mhs_lolos['lolos']['c3'] ?></td>
+                                        <td><?= $mhs_lolos['lolos']['c4'] ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-middle">Data Konversi Normalisasi</td>
+                                        <td><?= $mhs_lolos['alternatif']['c1'] ?></td>
+                                        <td><?= $mhs_lolos['alternatif']['c2'] ?></td>
+                                        <td><?= $mhs_lolos['alternatif']['c3'] ?></td>
+                                        <td><?= $mhs_lolos['alternatif']['c4'] ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-middle">Kriteria x Bobot</td>
+                                        <td><?= $mhs_lolos['alternatif']['c1'] * 0.3 ?></td>
+                                        <td><?= $mhs_lolos['alternatif']['c2'] * 0.27 ?></td>
+                                        <td><?= $mhs_lolos['alternatif']['c3'] * 0.23 ?></td>
+                                        <td><?= $mhs_lolos['alternatif']['c4'] * 0.2 ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-middle"><b>Bobot</b> </td>
+                                        <td>0.3</td>
+                                        <td>0.27</td>
+                                        <td>0.23</td>
+                                        <td>0.2</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-middle"><b> Max/Min</b> </td>
+                                        <td>(min)<br><?= $mhs_lolos['alternatif']['C1min'] ?></td>
+                                        <td>(max)<br><?= $mhs_lolos['alternatif']['C2max'] ?></td>
+                                        <td>(max)<br><?= $mhs_lolos['alternatif']['C3max'] ?></td>
+                                        <td>(max)<br><?= $mhs_lolos['alternatif']['C4max'] ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Score</b></td>
+                                        <td colspan="4"><?= $mhs_lolos['score'] ?></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a class="btn btn-secondary" data-dismiss="modal">Close</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- END Modal konversi -->
+        <?php $i++  ?>
+    <?php endforeach; ?>
 
     <script>
         var nav = document.getElementsByClassName("nav-item");

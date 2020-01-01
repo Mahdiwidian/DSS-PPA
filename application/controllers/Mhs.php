@@ -10,18 +10,19 @@ class Mhs extends CI_Controller
 
     public function index()
     {
-        if($_SESSION['masuk'] == TRUE){
+        if ($_SESSION['masuk'] == TRUE) {
             if ($_SESSION['akses'] == 2) {
+                // $data['mahasiswa'] = $this->Mahasiswa_model->getMahasiswaById($_SESSION['ses_nama']);
                 $data['page_title'] = 'Daftar Beasisiswa PPA';
                 $this->load->view('Layout/header', $data);
                 $this->load->view('Mhs/index');
                 $this->load->view('Layout/footer');
             } else {
-                redirect(base_url()); 
+                redirect(base_url());
             }
-        }else{
-            $url=base_url();
-            echo $this->session->set_flashdata('msg','Login Terlebih Dahulu');
+        } else {
+            $url = base_url();
+            echo $this->session->set_flashdata('msg', 'Login Terlebih Dahulu');
             redirect($url);
         }
     }
@@ -29,6 +30,7 @@ class Mhs extends CI_Controller
     public function storeData()
     {
         $data = [
+            "nim" => $_POST['nim'],
             "nama" => $_POST['nama'],
             "prodi" => $_POST['prodi'],
             "gaji_ortu" => $_POST['gaji'],
@@ -40,12 +42,12 @@ class Mhs extends CI_Controller
             "semester" => $_POST['semester']
         ];
 
-        echo "<pre>";
-        print_r($_POST);
-        echo "</pre>";
-        die();
+        // echo "<pre>";
+        // print_r($_POST);
+        // echo "</pre>";
+        // die();
 
         $this->Mahasiswa_model->insertMahasiswa($data);
-        redirect('Mhs');
+        redirect('Pengumuman');
     }
 }

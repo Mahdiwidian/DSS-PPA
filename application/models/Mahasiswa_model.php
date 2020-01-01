@@ -12,7 +12,7 @@ class Mahasiswa_model extends CI_Model{
         // return $this->db->where('nim', $nim);
     }
     
-    public function inserMahasiswa($data)
+    public function insertMahasiswa($data)
     {
         $this->db->insert('data_mahasiswa', $data);
     }

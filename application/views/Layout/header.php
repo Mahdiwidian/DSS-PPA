@@ -41,7 +41,7 @@
                         <a class="nav-link" href="<?= base_url('Mhs'); ?>">Daftar Beasiswa PPA <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url(''); ?>">Pengumuman<span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="<?= base_url('Pengumuman'); ?>">Pengumuman<span class="sr-only">(current)</span></a>
                     </li>
                 </ul>
             <?php
