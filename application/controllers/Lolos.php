@@ -137,6 +137,8 @@ class Lolos extends CI_Controller
         // print_r($data_alt);
         // echo "</pre>";
 
+        echo $this->session->set_flashdata('msg','Data Yang Diseleksi Berhasil Diterima dan Disimpan');
+
         $status = ["status" => 0];
         $this->Mahasiswa_model->updateAllMahasiswa($status);
         $this->Lolos_model->deleteAllData();
@@ -152,6 +154,8 @@ class Lolos extends CI_Controller
         // print_r($nim);
         // echo "</pre>";
         // die();
+
+        echo $this->session->set_flashdata('msg','Data Berhasil Dihapus');
 
         $status = ["status" => 0];
         $this->Mahasiswa_model->updateMahasiswa($nim, $status);

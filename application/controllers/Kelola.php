@@ -56,12 +56,15 @@
                 "semester" => $_POST['semester'] 
             ];
     
+            echo $this->session->set_flashdata('msg','Data Berhasil Diubah');
             $this->Mahasiswa_model->updateMahasiswa($nim, $data);
             redirect('kelola');
         }
 
         public function delete()
         {
+            echo $this->session->set_flashdata('msg','Data Berhasil Dihapus');
+
             $nim = $_POST['nim'];            
             $this->Mahasiswa_model->deleteData($nim);
             redirect('kelola');
@@ -120,6 +123,7 @@
                 "c4" => $c4
             ]; 
 
+            echo $this->session->set_flashdata('msg','Data Berhasil Diverifikasi');
             $this->Lolos_model->insertData($data);
             redirect('kelola');
             // echo "<pre>";
