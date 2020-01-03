@@ -26,6 +26,17 @@
         }
     );
 
+    $('.checkitem').click(function() {
+        alert('halo');
+        if ($('.checkitem').is(':checked')) {
+            $('#del').prop('disabled', false);
+            $('#terima').prop('disabled', false);
+        } else {
+            $('#del').prop('disabled', true);
+            $('#terima').prop('disabled', true);
+        }
+    })
+
     $(document).ready(function() {
         var mytable = $('#mytable').DataTable({
             // "searching": false,
@@ -43,18 +54,13 @@
             ]
         })
 
-
-        $('.checkitem').change(function() {
-            if ($(this).is(':checked')) {
-                $('#del').prop('disabled', false);
-                $('#terima').prop('disabled', false);
-            } else {
-                $('#del').prop('disabled', true);
-                $('#terima').prop('disabled', true);
-            }
-
-            // $('#del').attr('value', 'keren')
-        })
+        // if ($(this).is(':checked')) {
+        //     $('#del').prop('disabled', false);
+        //     $('#terima').prop('disabled', false);
+        // } else {
+        //     $('#del').prop('disabled', true);
+        //     $('#terima').prop('disabled', true);
+        // }
 
         $('#checkall').change(function() {
             $('.checkitem').prop("checked", $(this).prop("checked"))
@@ -72,10 +78,20 @@
         // })
         $("#del").click(function(e) {
             var confirm = window.confirm("Apakah Anda yakin ingin menghapus data-data ini?");
-            if (confirm) // Jika user mengklik tombol "Ok"
-                $('#myform').attr('action', '<?= base_url('/lolos/delete/') ?>')
-            $('#terima').attr('name', '')
-            $("#myform").submit(); // Submit form
+            if (confirm) {
+                var action = $('#myform').attr('action');
+                $('#myform').attr('action', action)
+                $('#terima').attr('name', '')
+                $("#myform").submit(); // Submit form
+            } // Jika user mengklik tombol "Ok"
+        });
+        $("#terima").click(function(e) {
+            var confirm = window.confirm("Apakah Anda yakin ingin Menerima data-data ini?");
+            if (confirm) {
+                $('#myform').attr('action', '<?php base_url('kelola/index') ?>')
+                $("#myform").submit(); // Submit form
+            } // Jika user mengklik tombol "Ok"     
+
         });
     })
 </script>

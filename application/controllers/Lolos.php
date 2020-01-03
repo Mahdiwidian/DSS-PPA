@@ -82,11 +82,11 @@ class Lolos extends CI_Controller
                     $data_mhs['mahasiswa'] = $data_lolos;
 
                     // echo '<pre>';
-                    // var_dump($data_mhs);
+                    // print_r($_POST);
                     // echo '<pre>';
                     // die();
 
-                    if (@$_POST['submit'] == "Terima") {
+                    if (@$_POST['terima'] == "Terima") {
                         $this->accept($data_lolos);
                     }
                 } else {
@@ -117,11 +117,27 @@ class Lolos extends CI_Controller
         // die();
         
 
-        for ($j = 0; $j < count($data); $j++) {
+        for ($j = 0; $j < count($data)-1; $j++) {
+            // pengulangan buat cari nim 
             for ($i = 0; $i < count($data); $i++) {
                 if (@$id[$j] == $data[$i]['lolos']['id']) {
-                    $data_alt[$j] = [
-                        "id_data_mhsw" => $data[$i]['lolos']['nim'],
+                    $data_alt[] = [
+                        "nim" => $data[$i]['lolos']['nim'],
+                        "prodi" => $data[$i]['lolos']['prodi'],
+                        "gaji_ortu" => $data[$i]['lolos']['gaji_ortu'],
+                        "jumlah_saudara" => $data[$i]['lolos']['jumlah_saudara'],
+                        "telp" => $data[$i]['lolos']['telp'],
+                        "ip1" => $data[$i]['lolos']['ip1'],
+                        "ip2" => $data[$i]['lolos']['ip2'],
+                        "ip3" => $data[$i]['lolos']['ip3'],
+                        "ip4" => $data[$i]['lolos']['ip4'],
+                        "ip5" => $data[$i]['lolos']['ip5'],
+                        "ip6" => $data[$i]['lolos']['ip6'],
+                        "ipk" => $data[$i]['lolos']['ipk'],
+                        "angkatan" => $data[$i]['lolos']['angkatan'],
+                        "rekening" => $data[$i]['lolos']['rekening'],
+                        "semester" => $data[$i]['lolos']['semester'],
+                        "created_at" => $data[$i]['lolos']['created_at'],
                         "f_c1" => $data[$i]['alternatif']['c1'],
                         "f_c2" => $data[$i]['alternatif']['c2'],
                         "f_c3" => $data[$i]['alternatif']['c3'],
@@ -130,36 +146,41 @@ class Lolos extends CI_Controller
                     ];
                 }
             }
+            // echo count($data);
             $this->Pengumuman_model->insertData($data_alt[$j]);
+            $status = ["status" => 2];
+            $this->Mahasiswa_model->updateMahasiswa($data_alt[$j]["nim"], $status);
         }
 
         // echo "<pre>";
         // print_r($data_alt);
         // echo "</pre>";
+        // die();       
 
         echo $this->session->set_flashdata('msg','Data Yang Diseleksi Berhasil Diterima dan Disimpan');
 
-        $status = ["status" => 0];
-        $this->Mahasiswa_model->updateAllMahasiswa($status);
+        
         $this->Lolos_model->deleteAllData();
         redirect('kelola');
     }
     public function delete()
     {
         $id = $_POST['id'];
-        $data = $this->Lolos_model->getLolos($id);
-        $nim = $data['nim'];
+        $datas = $this->Lolos_model->getLolos($id);
+        foreach ($datas as $key => $data) {
+            $nim[] = $data['id_data_mhsw'];            
+        }
 
         // echo "<pre>";
         // print_r($nim);
         // echo "</pre>";
         // die();
 
-        echo $this->session->set_flashdata('msg','Data Berhasil Dihapus');
-
+        
         $status = ["status" => 0];
         $this->Mahasiswa_model->updateMahasiswa($nim, $status);
         $this->Lolos_model->deleteData($id);
+        echo $this->session->set_flashdata('msg','Data Berhasil Dihapus');
         redirect('lolos');
     }
 }

@@ -28,4 +28,5 @@ class Pengumuman extends CI_Controller
             redirect($url);
         }
     }
+
 }

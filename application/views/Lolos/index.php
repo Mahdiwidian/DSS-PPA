@@ -22,7 +22,7 @@
 
             <!-- Default unchecked -->
             <div class="col-lg-12">
-                <form id="myform" method="post">
+                <form id="myform" method="post" action="<?= base_url('/lolos/delete/') ?>">
                     <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
                     <table id="mytable" class="table table-sm table-responsive table-hover" style="width:100%">
                         <thead class="thead-light">
@@ -88,7 +88,7 @@
                             </tr>
                         </tfoot>
                     </table>
-                    <input id="terima" type="submit" class="btn btn-success mt-4 col-lg-12" name="submit" value="Terima" disabled>
+                    <input id="terima" class="btn btn-success mt-4 col-lg-12" name="terima" value="Terima" disabled>
                 </form>
             </div>
 

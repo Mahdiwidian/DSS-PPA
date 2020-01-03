@@ -3,7 +3,10 @@
 class Mahasiswa_model extends CI_Model{
     public function getAllMahasiswa()
     {
-        return $this->db->get_where('data_mahasiswa', ['status' => 0])->result_array();
+        $this->db->where('status', 0);
+        $this->db->or_where('status', 2);
+        return $this->db->get('data_mahasiswa')->result_array();
+        // return $this->db->get_where('data_mahasiswa', ['status' => 0 ])->result_array();
     }
 
     public function getMahasiswaById($nim)

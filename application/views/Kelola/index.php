@@ -42,7 +42,7 @@
                                 <th class="align-middle">No Rekening</th>
                                 <th class="align-middle">IPK</th>
                                 <th class="align-middle">Penghasilan Orang Tua</th>
-                                <th class="align-middle">Jumlah Tanggungan</th>  
+                                <th class="align-middle">Jumlah Tanggungan</th>
                                 <th class="align-middle">Tanggal Daftar</th>
                                 <th class="align-middle">Aksi</th>
                             </tr>
@@ -63,10 +63,19 @@
                                     <td>Rp <?= number_format($mhs['gaji_ortu'], 0, ',', '.'); ?> </td>
                                     <td><?= $mhs['jumlah_saudara'] ?></td>
                                     <td><?= $mhs['created_at'] ?></td>
-                                    <td>
-                                        <!-- <a href="<?= base_url() ?>kelola/edit/<?= $mhs['nim'] ?>" class="btn badge-warning">Edit</a> -->
-                                        <a href="<?= base_url('/kelola/verifikasi/') . $mhs['nim'] ?>" class="btn badge-success col-lg-12">Verifikasi</a>
-                                        <a href="<?= base_url('/kelola/edit/') . $mhs['nim'] ?>" class="btn badge-warning col-lg-12 mt-2">Edit</a>
+                                    <td class="text-center align-middle">
+                                        <?php
+                                            if ($mhs['status'] != 2) {
+                                                ?>
+                                            <a href="<?= base_url('/kelola/verifikasi/') . $mhs['nim'] ?>" class="btn badge-success col-lg-12">Verifikasi</a>
+                                            <!-- <a href="<?= base_url() ?>kelola/edit/<?= $mhs['nim'] ?>" class="btn badge-warning">Edit</a> -->
+                                            <a href="<?= base_url('/kelola/edit/') . $mhs['nim'] ?>" class="btn badge-warning col-lg-12 mt-2">Edit</a>
+                                        <?php
+                                            }else{
+                                                echo "<img src='".base_url('assets/img/correct.png')."' alt='' width='50px'></br>";
+                                                echo "";
+                                            }
+                                            ?>
                                     </td>
                                 </tr>
                                 <?php $i++; ?>
@@ -159,4 +168,3 @@
         nav[0].setAttribute("Class", "nav-item active")
         nav[1].setAttribute("Class", "nav-item")
     </script>
-
