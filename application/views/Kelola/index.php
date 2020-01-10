@@ -65,12 +65,15 @@
                                     <td><?= $mhs['created_at'] ?></td>
                                     <td class="text-center align-middle">
                                         <?php
-                                            if ($mhs['status'] != 2) {
+                                            if ($mhs['status'] == 0) {
                                                 ?>
                                             <a href="<?= base_url('/kelola/verifikasi/') . $mhs['nim'] ?>" class="btn badge-success col-lg-12">Verifikasi</a>
                                             <!-- <a href="<?= base_url() ?>kelola/edit/<?= $mhs['nim'] ?>" class="btn badge-warning">Edit</a> -->
                                             <a href="<?= base_url('/kelola/edit/') . $mhs['nim'] ?>" class="btn badge-warning col-lg-12 mt-2">Edit</a>
                                         <?php
+                                            }elseif ($mhs['status'] == 2) {
+                                                echo "<img src='".base_url('assets/img/delete.png')."' alt='' width='50px'></br>";
+                                                echo "";
                                             }else{
                                                 echo "<img src='".base_url('assets/img/correct.png')."' alt='' width='50px'></br>";
                                                 echo "";

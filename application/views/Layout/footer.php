@@ -27,7 +27,7 @@
     );
 
     $('.checkitem').click(function() {
-        alert('halo');
+        // alert('halo');
         if ($('.checkitem').is(':checked')) {
             $('#del').prop('disabled', false);
             $('#terima').prop('disabled', false);

@@ -84,7 +84,7 @@ class Kelola extends CI_Controller
         $this->Mahasiswa_model->updateMahasiswa($nim, $status);
         // $data['mahasiswa'] = $this->Mahasiswa_model->verifData($nim);
 
-        // BEGIN NILAI KONVErSI
+        // BEGIN NILAI KONVERSI
         // untuk c1
         if ($mahasiswa['gaji_ortu'] >= 0 && $mahasiswa['gaji_ortu'] <= 5000000) {
             $c1 = '1';

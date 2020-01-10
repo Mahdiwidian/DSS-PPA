@@ -16,7 +16,6 @@ class Lolos extends CI_Controller
                 $lolos = $this->Lolos_model->getAllLolos();
                 $data['lolos'] =  $lolos;
 
-
                 if ($lolos != null) {
                     // mengurutkan array max dan min
                     foreach ($lolos as $key => $krit) {
@@ -33,7 +32,6 @@ class Lolos extends CI_Controller
                     $C4max = MAX($c4);
 
                     // normalisasi kategori
-
                     foreach ($lolos as $key => $d_lolos) {
                         $data_normal[$key] = [
                             "c1" => ($C1min / $d_lolos['c1']),
@@ -63,7 +61,7 @@ class Lolos extends CI_Controller
                         ];
                     }
 
-
+                    //mengurutkan data sesuai demgan score
                     function array_sort_by_column(&$arr, $col, $dir = SORT_DESC)
                     {
                         $sort_col = array();
@@ -110,65 +108,82 @@ class Lolos extends CI_Controller
     public function accept($data)
     {
         $id = $_POST['id'];
-        // echo "<pre>";
-        // // print_r($id);
-        // print_r ($data);
-        // echo "</pre>";
-        // die();
-        
 
-        for ($j = 0; $j < count($data)-1; $j++) {
-            // pengulangan buat cari nim 
-            for ($i = 0; $i < count($data); $i++) {
-                if (@$id[$j] == $data[$i]['lolos']['id']) {
+
+        // ngulang jumlah id
+        foreach ($id as $i => $row_id) {
+            // ngulang semua data lolos
+            foreach ($data as $j => $row_data) {
+                if ($row_id == $row_data['lolos']['id']) {
                     $data_alt[] = [
-                        "nim" => $data[$i]['lolos']['nim'],
-                        "prodi" => $data[$i]['lolos']['prodi'],
-                        "gaji_ortu" => $data[$i]['lolos']['gaji_ortu'],
-                        "jumlah_saudara" => $data[$i]['lolos']['jumlah_saudara'],
-                        "telp" => $data[$i]['lolos']['telp'],
-                        "ip1" => $data[$i]['lolos']['ip1'],
-                        "ip2" => $data[$i]['lolos']['ip2'],
-                        "ip3" => $data[$i]['lolos']['ip3'],
-                        "ip4" => $data[$i]['lolos']['ip4'],
-                        "ip5" => $data[$i]['lolos']['ip5'],
-                        "ip6" => $data[$i]['lolos']['ip6'],
-                        "ipk" => $data[$i]['lolos']['ipk'],
-                        "angkatan" => $data[$i]['lolos']['angkatan'],
-                        "rekening" => $data[$i]['lolos']['rekening'],
-                        "semester" => $data[$i]['lolos']['semester'],
-                        "created_at" => $data[$i]['lolos']['created_at'],
-                        "f_c1" => $data[$i]['alternatif']['c1'],
-                        "f_c2" => $data[$i]['alternatif']['c2'],
-                        "f_c3" => $data[$i]['alternatif']['c3'],
-                        "f_c4" => $data[$i]['alternatif']['c4'],
-                        "score" => $data[$i]['score']
+                        "nim" => $row_data['lolos']['nim'],
+                        "nama" => $row_data['lolos']['nama'],
+                        "prodi" => $row_data['lolos']['prodi'],
+                        "gaji_ortu" => $row_data['lolos']['gaji_ortu'],
+                        "jumlah_saudara" => $row_data['lolos']['jumlah_saudara'],
+                        "telp" => $row_data['lolos']['telp'],
+                        "ip1" => $row_data['lolos']['ip1'],
+                        "ip2" => $row_data['lolos']['ip2'],
+                        "ip3" => $row_data['lolos']['ip3'],
+                        "ip4" => $row_data['lolos']['ip4'],
+                        "ip5" => $row_data['lolos']['ip5'],
+                        "ip6" => $row_data['lolos']['ip6'],
+                        "ipk" => $row_data['lolos']['ipk'],
+                        "angkatan" => $row_data['lolos']['angkatan'],
+                        "rekening" => $row_data['lolos']['rekening'],
+                        "semester" => $row_data['lolos']['semester'],
+                        "created_at" => $row_data['lolos']['created_at'],
+                        "f_c1" => $row_data['alternatif']['c1'],
+                        "f_c2" => $row_data['alternatif']['c2'],
+                        "f_c3" => $row_data['alternatif']['c3'],
+                        "f_c4" => $row_data['alternatif']['c4'],
+                        "score" => $row_data['score']
                     ];
+                } else {
+                    $mhs_gagal[] = $row_data['lolos']['nim'];
                 }
             }
-            // echo count($data);
-            $this->Pengumuman_model->insertData($data_alt[$j]);
-            $status = ["status" => 2];
-            $this->Mahasiswa_model->updateMahasiswa($data_alt[$j]["nim"], $status);
+            $this->Pengumuman_model->insertData($data_alt[$i]);
         }
 
+        // ngambil data nimnya
+        foreach($data_alt as $value){
+            $data_nim[] = $value['nim'];
+        }
+        
+        // update status mahasiswa yang ga keterima
+        $status = ["status" => 2];
+        $this->Mahasiswa_model->updateMahasiswa(array_unique($mhs_gagal), $status);
+        
+        // update status mahasiswa yg lolos
+        $status = ["status" => 3];
+        $this->Mahasiswa_model->updateMahasiswa($data_nim, $status);
+
         // echo "<pre>";
-        // print_r($data_alt);
+        // print_r($data_nim);
         // echo "</pre>";
         // die();       
 
-        echo $this->session->set_flashdata('msg','Data Yang Diseleksi Berhasil Diterima dan Disimpan');
+        echo $this->session->set_flashdata('msg', 'Data Yang Diseleksi Berhasil Diterima dan Disimpan');
 
-        
         $this->Lolos_model->deleteAllData();
         redirect('kelola');
+    }
+
+    public function getNim($mahasiswa)
+    {
+        $retr = array();
+        foreach($mahasiswa as $value){
+            $retr[] = $value['nim'];
+        }
+        return $retr;
     }
     public function delete()
     {
         $id = $_POST['id'];
         $datas = $this->Lolos_model->getLolos($id);
         foreach ($datas as $key => $data) {
-            $nim[] = $data['id_data_mhsw'];            
+            $nim[] = $data['id_data_mhsw'];
         }
 
         // echo "<pre>";
@@ -176,11 +191,11 @@ class Lolos extends CI_Controller
         // echo "</pre>";
         // die();
 
-        
+
         $status = ["status" => 0];
         $this->Mahasiswa_model->updateMahasiswa($nim, $status);
         $this->Lolos_model->deleteData($id);
-        echo $this->session->set_flashdata('msg','Data Berhasil Dihapus');
+        echo $this->session->set_flashdata('msg', 'Data Berhasil Dihapus');
         redirect('lolos');
     }
 }

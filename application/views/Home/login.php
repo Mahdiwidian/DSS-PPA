@@ -66,8 +66,8 @@
                             </form>
                         </div>
                         <div>
-                            <a href="admin_login.php">Admin</a> |
-                            <a href="registration.php">Registrasi</a>
+                            <!-- <a href="admin_login.php">Admin</a> |
+                            <a href="registration.php">Registrasi</a> -->
                         </div>
                     </div>
                 </div>

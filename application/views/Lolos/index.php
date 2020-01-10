@@ -89,6 +89,7 @@
                         </tfoot>
                     </table>
                     <input id="terima" class="btn btn-success mt-4 col-lg-12" name="terima" value="Terima" disabled>
+                    <br><br>
                 </form>
             </div>
 
