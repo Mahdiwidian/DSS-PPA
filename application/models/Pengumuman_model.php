@@ -3,7 +3,7 @@
 class Pengumuman_model extends CI_Model{
     public function getPengumuman() 
     {
-        $this->db->get('data_pengumuman');
+        return $this->db->get('data_pengumuman')->result_array();
     }
     
     public function insertData($data)
@@ -14,8 +14,9 @@ class Pengumuman_model extends CI_Model{
     public function updatePengumuman($nim, $data)
     {
         $this->db->where_in('nim', $nim);
-        $this->db->update('data_mahasiswa', $data);
+        $this->db->update('data_pengumuman', $data);
     }
+    
 }
 
 ?>

@@ -110,53 +110,64 @@ class Lolos extends CI_Controller
         $id = $_POST['id'];
 
 
+        foreach ($data as $key => $row_data) {
+            $data_alt[] = [
+                "nim" => $row_data['lolos']['nim'],
+                "nama" => $row_data['lolos']['nama'],
+                "prodi" => $row_data['lolos']['prodi'],
+                "gaji_ortu" => $row_data['lolos']['gaji_ortu'],
+                "jumlah_saudara" => $row_data['lolos']['jumlah_saudara'],
+                "telp" => $row_data['lolos']['telp'],
+                "ip1" => $row_data['lolos']['ip1'],
+                "ip2" => $row_data['lolos']['ip2'],
+                "ip3" => $row_data['lolos']['ip3'],
+                "ip4" => $row_data['lolos']['ip4'],
+                "ip5" => $row_data['lolos']['ip5'],
+                "ip6" => $row_data['lolos']['ip6'],
+                "ipk" => $row_data['lolos']['ipk'],
+                "angkatan" => $row_data['lolos']['angkatan'],
+                "rekening" => $row_data['lolos']['rekening'],
+                "semester" => $row_data['lolos']['semester'],
+                "created_at" => $row_data['lolos']['created_at'],
+                "f_c1" => $row_data['alternatif']['c1'],
+                "f_c2" => $row_data['alternatif']['c2'],
+                "f_c3" => $row_data['alternatif']['c3'],
+                "f_c4" => $row_data['alternatif']['c4'],
+                "score" => $row_data['score'],
+                "status" => "2"
+            ];
+            $this->Pengumuman_model->insertData($data_alt[$key]);
+        }
+
         // ngulang jumlah id
         foreach ($id as $i => $row_id) {
             // ngulang semua data lolos
-            foreach ($data as $j => $row_data) {
+            foreach ($data as $j => $row_data) {               
                 if ($row_id == $row_data['lolos']['id']) {
-                    $data_alt[] = [
-                        "nim" => $row_data['lolos']['nim'],
-                        "nama" => $row_data['lolos']['nama'],
-                        "prodi" => $row_data['lolos']['prodi'],
-                        "gaji_ortu" => $row_data['lolos']['gaji_ortu'],
-                        "jumlah_saudara" => $row_data['lolos']['jumlah_saudara'],
-                        "telp" => $row_data['lolos']['telp'],
-                        "ip1" => $row_data['lolos']['ip1'],
-                        "ip2" => $row_data['lolos']['ip2'],
-                        "ip3" => $row_data['lolos']['ip3'],
-                        "ip4" => $row_data['lolos']['ip4'],
-                        "ip5" => $row_data['lolos']['ip5'],
-                        "ip6" => $row_data['lolos']['ip6'],
-                        "ipk" => $row_data['lolos']['ipk'],
-                        "angkatan" => $row_data['lolos']['angkatan'],
-                        "rekening" => $row_data['lolos']['rekening'],
-                        "semester" => $row_data['lolos']['semester'],
-                        "created_at" => $row_data['lolos']['created_at'],
-                        "f_c1" => $row_data['alternatif']['c1'],
-                        "f_c2" => $row_data['alternatif']['c2'],
-                        "f_c3" => $row_data['alternatif']['c3'],
-                        "f_c4" => $row_data['alternatif']['c4'],
-                        "score" => $row_data['score']
+                    $data_nim_lolos[] = [
+                        "nim" => $row_data['lolos']['nim'],                      
                     ];
-                } else {
-                    $mhs_gagal[] = $row_data['lolos']['nim'];
+                } else {                    
+                    $mhs_nim_gagal[] = $row_data['lolos']['nim'];
                 }
             }
-            $this->Pengumuman_model->insertData($data_alt[$i]);
+            // $status = ["status" => 2];
+            // $this->Mahasiswa_model->updatePengumuman($data_alt[$i], $status);
+            // $this->Pengumuman_model->insertData($data_alt[$i]);
         }
 
         // ngambil data nimnya
-        foreach($data_alt as $value){
+        foreach($data_nim_lolos as $value){
             $data_nim[] = $value['nim'];
         }
         
         // update status mahasiswa yang ga keterima
         $status = ["status" => 2];
-        $this->Mahasiswa_model->updateMahasiswa(array_unique($mhs_gagal), $status);
+        $this->Mahasiswa_model->updateMahasiswa(array_unique($mhs_nim_gagal), $status);
         
         // update status mahasiswa yg lolos
         $status = ["status" => 3];
+        $this->Pengumuman_model->updatePengumuman($data_nim, $status);
         $this->Mahasiswa_model->updateMahasiswa($data_nim, $status);
 
         // echo "<pre>";

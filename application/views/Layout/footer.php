@@ -30,10 +30,10 @@
         // alert('halo');
         if ($('.checkitem').is(':checked')) {
             $('#del').prop('disabled', false);
-            $('#terima').prop('disabled', false);
+            $('#btnTerima').prop('disabled', false);
         } else {
             $('#del').prop('disabled', true);
-            $('#terima').prop('disabled', true);
+            $('#btnTerima').prop('disabled', true);
         }
     })
 
@@ -66,10 +66,10 @@
             $('.checkitem').prop("checked", $(this).prop("checked"))
             if ($('.checkitem').is(':checked')) {
                 $('#del').prop('disabled', false);
-                $('#terima').prop('disabled', false);
+                $('#btnTerima').prop('disabled', false);
             } else {
                 $('#del').prop('disabled', true);
-                $('#terima').prop('disabled', true);
+                $('#btnTerima').prop('disabled', true);
             }
         })
         // $('#terima').click(function() {
@@ -85,7 +85,7 @@
                 $("#myform").submit(); // Submit form
             } // Jika user mengklik tombol "Ok"
         });
-        $("#terima").click(function(e) {
+        $("#btnTerima").click(function(e) {
             var confirm = window.confirm("Apakah Anda yakin ingin Menerima data-data ini?");
             if (confirm) {
                 $('#myform').attr('action', '<?php base_url('kelola/index') ?>')

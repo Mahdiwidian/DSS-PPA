@@ -17,9 +17,10 @@ class Pengumuman extends CI_Controller
                 $this->load->view('Pengumuman/index_mhs');
                 $this->load->view('Layout/footer');
             } else {
+                $data['pengumuman'] = $this->Pengumuman_model->getPengumuman();
                 $data['page_title'] = 'Pengumuman Beasisiswa PPA';
                 $this->load->view('Layout/header', $data);
-                $this->load->view('Pengumuman/index_admin');
+                $this->load->view('Pengumuman/index_adm');
                 $this->load->view('Layout/footer');
             }
         }else{

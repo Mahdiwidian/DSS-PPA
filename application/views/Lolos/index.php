@@ -88,7 +88,8 @@
                             </tr>
                         </tfoot>
                     </table>
-                    <input id="terima" class="btn btn-success mt-4 col-lg-12" name="terima" value="Terima" disabled>
+                    <input id="terima"  name="terima" value="Terima" hidden>
+                    <input id="btnTerima" type="button" class="btn btn-success mt-4 col-lg-12" value="Terima" disabled>
                     <br><br>
                 </form>
             </div>
@@ -235,4 +236,5 @@
         // alert(nav[0].getAttribute('class'));
         nav[0].setAttribute("Class", "nav-item")
         nav[1].setAttribute("Class", "nav-item active")
+        nav[2].setAttribute("Class", "nav-item")
     </script>

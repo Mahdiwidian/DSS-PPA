@@ -108,7 +108,7 @@
     </div>
 
     </div>
-    </div> -->
+    </div> 
 
     <?php $i = 1; ?>
     <?php foreach ($mahasiswa as $mhs) : ?>
@@ -170,4 +170,5 @@
         // alert(nav[0].getAttribute('class'));
         nav[0].setAttribute("Class", "nav-item active")
         nav[1].setAttribute("Class", "nav-item")
+        nav[2].setAttribute("Class", "nav-item")
     </script>
